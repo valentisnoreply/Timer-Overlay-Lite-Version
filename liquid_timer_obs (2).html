@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro Líquido</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial Black', sans-serif;
+            overflow: hidden;
+            transition: background 0.3s;
+        }
+
+        .timer-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .timer-base {
+            font-size: 150px;
+            font-weight: 900;
+            color: #333333;
+            -webkit-text-stroke: 4px #ffffff;
+            text-stroke: 4px #ffffff;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .timer-liquid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 150px;
+            font-weight: 900;
+            background: linear-gradient(180deg, #00d4ff 0%, #0088ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: waveAnimation 4s ease-in-out infinite;
+        }
+
+        @keyframes waveAnimation {
+            0%, 100% {
+                clip-path: polygon(
+                    0% 45%, 15% 44%, 32% 50%,
+                    54% 60%, 70% 61%, 84% 59%, 100% 52%,
+                    100% 100%, 0% 100%
+                );
+            }
+            50% {
+                clip-path: polygon(
+                    0% 60%, 15% 65%, 34% 66%,
+                    51% 62%, 67% 50%, 84% 45%, 100% 46%,
+                    100% 100%, 0% 100%
+                );
+            }
+        }
+
+        .controls-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.9);
+            border-left: 2px solid #ffffff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .controls-panel.hidden {
+            transform: translateX(100%);
+        }
+
+        .toggle-btn {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            padding: 10px 15px;
+            font-size: 20px;
+            font-weight: bold;
+            border: 3px solid #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .toggle-btn:hover {
+            background: #00d4ff;
+            border-color: #00d4ff;
+        }
+
+        .config-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .config-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 3px solid #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.7);
+            color: #ffffff;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #00d4ff;
+            border-color: #00d4ff;
+            transform: scale(1.05);
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #00d4ff;
+            border-radius: 5px;
+            width: 70px;
+            text-align: center;
+            background: #ffffff;
+            font-weight: bold;
+        }
+
+        input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border: 2px solid #00d4ff;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ffffff;
+        }
+
+        label {
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .time-inputs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+            border: 2px solid #00d4ff;
+            border-radius: 5px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .controls-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .divider {
+            height: 2px;
+            background: #ffffff;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleControls()">⚙️</button>
+
+    <div class="controls-panel" id="controlsPanel">
+        <div class="config-section">
+            <h3 style="color: #ffffff; text-align: center;">Configurações</h3>
+            
+            <div class="config-item">
+                <label>Modo:</label>
+                <div class="mode-toggle">
+                    <button class="mode-btn active" onclick="setMode('countdown')">Regressiva</button>
+                    <button class="mode-btn" onclick="setMode('countup')">Progressiva</button>
+                </div>
+            </div>
+
+            <div class="config-item">
+                <label>Duração:</label>
+                <div class="time-inputs">
+                    <input type="number" id="minutes" value="5" min="0" max="999">
+                    <span style="color: #fff;">min</span>
+                    <input type="number" id="seconds" value="0" min="0" max="59">
+                    <span style="color: #fff;">seg</span>
+                </div>
+            </div>
+
+            <button onclick="applySettings()">✓ Aplicar Duração</button>
+
+            <div class="divider"></div>
+
+            <div class="config-item">
+                <label>Cor do Contorno:</label>
+                <input type="color" id="outlineColor" value="#ffffff" onchange="updateColors()">
+            </div>
+
+            <div class="config-item">
+                <label>Cor do Líquido:</label>
+                <input type="color" id="liquidColor" value="#00d4ff" onchange="updateColors()">
+            </div>
+
+            <div class="config-item">
+                <label>Cor de Preenchimento:</label>
+                <input type="color" id="fillColor" value="#333333" onchange="updateColors()">
+            </div>
+
+            <div class="config-item">
+                <label>Cor do Fundo:</label>
+                <input type="color" id="bgColor" value="#000000" onchange="updateColors()">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="controls-buttons">
+                <button onclick="startTimer()">▶ Iniciar</button>
+                <button onclick="pauseTimer()">⏸ Pausar</button>
+                <button onclick="resetTimer()">↻ Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="timer-wrapper">
+        <div class="timer-base" id="timer-base">05:00</div>
+        <div class="timer-liquid" id="timer-liquid">05:00</div>
+    </div>
+
+    <script>
+        let totalSeconds = 300;
+        let currentSeconds = 300;
+        let interval = null;
+        let isRunning = false;
+        let mode = 'countdown';
+
+        function toggleControls() {
+            const panel = document.getElementById('controlsPanel');
+            panel.classList.toggle('hidden');
+        }
+
+        function updateDisplay() {
+            let displaySeconds = mode === 'countdown' ? currentSeconds : (totalSeconds - currentSeconds);
+            const minutes = Math.floor(displaySeconds / 60);
+            const seconds = displaySeconds % 60;
+            const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            
+            document.getElementById('timer-base').textContent = display;
+            document.getElementById('timer-liquid').textContent = display;
+            
+            let percentage;
+            if (mode === 'countdown') {
+                percentage = (currentSeconds / totalSeconds) * 100;
+            } else {
+                percentage = ((totalSeconds - currentSeconds) / totalSeconds) * 100;
+            }
+            
+            updateClipPath(percentage);
+        }
+
+        function updateClipPath(percentage) {
+            const liquidElement = document.getElementById('timer-liquid');
+            const topEdge = 100 - percentage;
+            
+            const keyframe1 = `
+                0% {
+                    clip-path: polygon(
+                        0% ${topEdge}%, 
+                        10% ${topEdge - 2}%, 
+                        20% ${topEdge - 3}%,
+                        30% ${topEdge - 2}%,
+                        40% ${topEdge + 1}%, 
+                        50% ${topEdge + 2}%, 
+                        60% ${topEdge + 1}%,
+                        70% ${topEdge - 1}%,
+                        80% ${topEdge - 2}%,
+                        90% ${topEdge - 1}%,
+                        100% ${topEdge}%,
+                        100% 100%, 0% 100%
+                    );
+                }
+                25% {
+                    clip-path: polygon(
+                        0% ${topEdge - 1}%, 
+                        10% ${topEdge + 1}%, 
+                        20% ${topEdge + 2}%,
+                        30% ${topEdge + 3}%,
+                        40% ${topEdge + 2}%, 
+                        50% ${topEdge}%, 
+                        60% ${topEdge - 2}%,
+                        70% ${topEdge - 3}%,
+                        80% ${topEdge - 2}%,
+                        90% ${topEdge}%,
+                        100% ${topEdge + 1}%,
+                        100% 100%, 0% 100%
+                    );
+                }
+                50% {
+                    clip-path: polygon(
+                        0% ${topEdge + 2}%, 
+                        10% ${topEdge + 3}%, 
+                        20% ${topEdge + 2}%,
+                        30% ${topEdge}%,
+                        40% ${topEdge - 2}%, 
+                        50% ${topEdge - 3}%, 
+                        60% ${topEdge - 2}%,
+                        70% ${topEdge + 1}%,
+                        80% ${topEdge + 2}%,
+                        90% ${topEdge + 3}%,
+                        100% ${topEdge + 2}%,
+                        100% 100%, 0% 100%
+                    );
+                }
+                75% {
+                    clip-path: polygon(
+                        0% ${topEdge + 1}%, 
+                        10% ${topEdge - 1}%, 
+                        20% ${topEdge - 2}%,
+                        30% ${topEdge - 2}%,
+                        40% ${topEdge - 1}%, 
+                        50% ${topEdge + 1}%, 
+                        60% ${topEdge + 3}%,
+                        70% ${topEdge + 2}%,
+                        80% ${topEdge}%,
+                        90% ${topEdge - 2}%,
+                        100% ${topEdge - 1}%,
+                        100% 100%, 0% 100%
+                    );
+                }
+                100% {
+                    clip-path: polygon(
+                        0% ${topEdge}%, 
+                        10% ${topEdge - 2}%, 
+                        20% ${topEdge - 3}%,
+                        30% ${topEdge - 2}%,
+                        40% ${topEdge + 1}%, 
+                        50% ${topEdge + 2}%, 
+                        60% ${topEdge + 1}%,
+                        70% ${topEdge - 1}%,
+                        80% ${topEdge - 2}%,
+                        90% ${topEdge - 1}%,
+                        100% ${topEdge}%,
+                        100% 100%, 0% 100%
+                    );
+                }
+            `;
+            
+            const styleSheet = document.styleSheets[0];
+            const rules = styleSheet.cssRules || styleSheet.rules;
+            
+            for (let i = rules.length - 1; i >= 0; i--) {
+                if (rules[i].name === 'waveAnimation') {
+                    styleSheet.deleteRule(i);
+                    break;
+                }
+            }
+            
+            styleSheet.insertRule(`@keyframes waveAnimation { ${keyframe1} }`, styleSheet.cssRules.length);
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            
+            isRunning = true;
+            interval = setInterval(() => {
+                if (currentSeconds > 0) {
+                    currentSeconds--;
+                    updateDisplay();
+                } else {
+                    pauseTimer();
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            if (interval) {
+                clearInterval(interval);
+                interval = null;
+            }
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            currentSeconds = totalSeconds;
+            updateDisplay();
+        }
+
+        function applySettings() {
+            const minutes = parseInt(document.getElementById('minutes').value) || 0;
+            const seconds = parseInt(document.getElementById('seconds').value) || 0;
+            totalSeconds = (minutes * 60) + seconds;
+            currentSeconds = totalSeconds;
+            updateDisplay();
+        }
+
+        function setMode(newMode) {
+            mode = newMode;
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            resetTimer();
+        }
+
+        function updateColors() {
+            const outlineColor = document.getElementById('outlineColor').value;
+            const liquidColor = document.getElementById('liquidColor').value;
+            const fillColor = document.getElementById('fillColor').value;
+            const bgColor = document.getElementById('bgColor').value;
+            
+            document.getElementById('timer-base').style.webkitTextStroke = `4px ${outlineColor}`;
+            document.getElementById('timer-base').style.textStroke = `4px ${outlineColor}`;
+            document.getElementById('timer-base').style.color = fillColor;
+            
+            const darkerLiquid = shadeColor(liquidColor, -20);
+            const liquidElement = document.getElementById('timer-liquid');
+            liquidElement.style.background = `linear-gradient(180deg, ${liquidColor} 0%, ${darkerLiquid} 100%)`;
+            liquidElement.style.webkitBackgroundClip = 'text';
+            liquidElement.style.backgroundClip = 'text';
+            liquidElement.style.webkitTextFillColor = 'transparent';
+            
+            document.body.style.background = bgColor;
+        }
+
+        function shadeColor(color, percent) {
+            const num = parseInt(color.replace("#",""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 +
+                (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255))
+                .toString(16).slice(1);
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>
