@@ -12,7 +12,7 @@
         }
 
         body {
-            background: #000000;
+            background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,11 +30,10 @@
         .timer-base {
             font-size: 150px;
             font-weight: 900;
-            color: #333333;
-            -webkit-text-stroke: 4px #ffffff;
-            text-stroke: 4px #ffffff;
+            color: #fdfdfd;
+            -webkit-text-stroke: 4px #fff;
+            text-stroke: 4px #fff;
             position: relative;
-            transition: all 0.3s;
         }
 
         .timer-liquid {
@@ -43,28 +42,11 @@
             left: 0;
             font-size: 150px;
             font-weight: 900;
-            background: linear-gradient(180deg, #00d4ff 0%, #0088ff 100%);
+            background: linear-gradient(180deg, #00d4ff 0%, #ff46f6 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: waveAnimation 4s ease-in-out infinite;
-        }
-
-        @keyframes waveAnimation {
-            0%, 100% {
-                clip-path: polygon(
-                    0% 45%, 15% 44%, 32% 50%,
-                    54% 60%, 70% 61%, 84% 59%, 100% 52%,
-                    100% 100%, 0% 100%
-                );
-            }
-            50% {
-                clip-path: polygon(
-                    0% 60%, 15% 65%, 34% 66%,
-                    51% 62%, 67% 50%, 84% 45%, 100% 46%,
-                    100% 100%, 0% 100%
-                );
-            }
         }
 
         .controls-panel {
@@ -72,8 +54,9 @@
             right: 0;
             top: 0;
             height: 100vh;
+            width: 320px;
             background: rgba(0, 0, 0, 0.9);
-            border-left: 2px solid #ffffff;
+            border-left: 2px solid #fff;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -94,11 +77,11 @@
             padding: 10px 15px;
             font-size: 20px;
             font-weight: bold;
-            border: 3px solid #ffffff;
+            border: 3px solid #fff;
             border-radius: 8px;
             cursor: pointer;
             background: rgba(0, 0, 0, 0.8);
-            color: #ffffff;
+            color: #fff;
             transition: all 0.3s;
             z-index: 1001;
         }
@@ -108,27 +91,15 @@
             border-color: #00d4ff;
         }
 
-        .config-section {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .config-item {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
         button {
             padding: 12px 25px;
             font-size: 16px;
             font-weight: bold;
-            border: 3px solid #ffffff;
+            border: 3px solid #fff;
             border-radius: 8px;
             cursor: pointer;
             background: rgba(0, 0, 0, 0.7);
-            color: #ffffff;
+            color: #fff;
             transition: all 0.3s;
         }
 
@@ -145,7 +116,7 @@
             border-radius: 5px;
             width: 70px;
             text-align: center;
-            background: #ffffff;
+            background: #fff;
             font-weight: bold;
         }
 
@@ -155,24 +126,52 @@
             border: 2px solid #00d4ff;
             border-radius: 5px;
             cursor: pointer;
-            background: #ffffff;
         }
 
-        label {
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: bold;
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #333;
+            outline: none;
+            -webkit-appearance: none;
         }
 
-        .time-inputs {
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00d4ff;
+            cursor: pointer;
+            border: 2px solid #fff;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #00d4ff;
+            cursor: pointer;
+            border: 2px solid #fff;
+        }
+
+        .config-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .config-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mode-toggle, .time-inputs {
             display: flex;
             gap: 10px;
             align-items: center;
-        }
-
-        .mode-toggle {
-            display: flex;
-            gap: 10px;
         }
 
         .mode-btn {
@@ -180,11 +179,7 @@
             padding: 10px;
             font-size: 14px;
             border: 2px solid #00d4ff;
-            border-radius: 5px;
-            cursor: pointer;
             background: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-            transition: all 0.3s;
         }
 
         .mode-btn.active {
@@ -192,16 +187,130 @@
             color: #000;
         }
 
-        .controls-buttons {
+        .units-toggle {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px 10px;
+        }
+
+        .units-toggle label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        .color-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .color-block summary {
+            cursor: pointer;
+            color: #fff;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .advanced-color {
+            margin-top: 10px;
+        }
+
+        .advanced-color summary {
+            cursor: pointer;
+            color: #aaa;
+            font-size: 12px;
+        }
+
+        .rgba-inputs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .rgba-inputs input {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .rgba-label {
+            font-size: 10px;
+            color: #aaa;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+
+        .slider-container {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #aaa;
         }
 
         .divider {
             height: 2px;
-            background: #ffffff;
+            background: #fff;
             margin: 10px 0;
+        }
+
+        .timer-actions {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            display: flex;
+            gap: 15px;
+        }
+
+        .timer-actions button {
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        label {
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .preset-item {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .preset-item button {
+            padding: 5px 10px;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .preset-item .delete-btn {
+            background: rgba(255, 50, 50, 0.3);
+            border-color: #ff5050;
+            flex: 0 0 40px;
+        }
+
+        .preset-item .delete-btn:hover {
+            background: rgba(255, 50, 50, 0.7);
+        }
+
+        .preset-item.default {
+            border: 2px solid gold;
+            padding: 5px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -210,23 +319,44 @@
 
     <div class="controls-panel" id="controlsPanel">
         <div class="config-section">
-            <h3 style="color: #ffffff; text-align: center;">Configurações</h3>
+            <h3 style="color: #fff; text-align: center;">Configurações</h3>
             
             <div class="config-item">
                 <label>Modo:</label>
                 <div class="mode-toggle">
-                    <button class="mode-btn active" onclick="setMode('countdown')">Regressiva</button>
-                    <button class="mode-btn" onclick="setMode('countup')">Progressiva</button>
+                    <button class="mode-btn active" onclick="setMode('countdown', this)">Regressiva</button>
+                    <button class="mode-btn" onclick="setMode('countup', this)">Progressiva</button>
                 </div>
             </div>
 
             <div class="config-item">
                 <label>Duração:</label>
                 <div class="time-inputs">
-                    <input type="number" id="minutes" value="5" min="0" max="999">
+                    <input type="number" id="days" value="0" min="0" max="999">
+                    <span style="color: #fff;">dia</span>
+                    <input type="number" id="hours" value="0" min="0" max="23">
+                    <span style="color: #fff;">h</span>
+                </div>
+                <div class="time-inputs">
+                    <input type="number" id="minutes" value="5" min="0" max="59">
                     <span style="color: #fff;">min</span>
                     <input type="number" id="seconds" value="0" min="0" max="59">
                     <span style="color: #fff;">seg</span>
+                </div>
+                <div class="time-inputs">
+                    <input type="number" id="milliseconds" value="0" min="0" max="999">
+                    <span style="color: #fff;">ms</span>
+                </div>
+            </div>
+
+            <div class="config-item">
+                <label>Unidades exibidas:</label>
+                <div class="units-toggle">
+                    <label><input type="checkbox" id="unit-days" onchange="updateDisplay()"> Dia</label>
+                    <label><input type="checkbox" id="unit-hours" onchange="updateDisplay()"> Hora</label>
+                    <label><input type="checkbox" id="unit-minutes" checked onchange="updateDisplay()"> Minuto</label>
+                    <label><input type="checkbox" id="unit-seconds" checked onchange="updateDisplay()"> Segundo</label>
+                    <label><input type="checkbox" id="unit-milliseconds" onchange="updateDisplay()"> Milésimo</label>
                 </div>
             </div>
 
@@ -235,28 +365,181 @@
             <div class="divider"></div>
 
             <div class="config-item">
-                <label>Cor do Contorno:</label>
-                <input type="color" id="outlineColor" value="#ffffff" onchange="updateColors()">
+                <details class="color-block">
+                    <summary>Cor do Contorno</summary>
+                    <div class="color-section">
+                        <input type="color" id="outlineColor" value="#ffffff" onchange="updateFromPicker('outline')">
+                        <details class="advanced-color">
+                            <summary>Avançado (RGBA)</summary>
+                            <div class="rgba-inputs">
+                                <div>
+                                    <div class="rgba-label">R</div>
+                                    <input type="number" id="outline-r" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">G</div>
+                                    <input type="number" id="outline-g" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">B</div>
+                                    <input type="number" id="outline-b" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">A</div>
+                                    <input type="number" id="outline-a" min="0" max="100" value="100" oninput="updateFromRGBA('outline')">
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
             </div>
 
             <div class="config-item">
-                <label>Cor do Líquido:</label>
-                <input type="color" id="liquidColor" value="#00d4ff" onchange="updateColors()">
+                <details class="color-block">
+                    <summary>Cor do Líquido</summary>
+                    <div class="color-section">
+                        <label style="font-size: 12px;">Cor do topo:</label>
+                        <input type="color" id="liquidColor" value="#00d4ff" onchange="updateFromPicker('liquid')">
+                        <details class="advanced-color">
+                            <summary>Avançado (RGBA)</summary>
+                            <div class="rgba-inputs">
+                                <div>
+                                    <div class="rgba-label">R</div>
+                                    <input type="number" id="liquid-r" min="0" max="255" value="0" oninput="updateFromRGBA('liquid')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">G</div>
+                                    <input type="number" id="liquid-g" min="0" max="255" value="212" oninput="updateFromRGBA('liquid')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">B</div>
+                                    <input type="number" id="liquid-b" min="0" max="255" value="255" oninput="updateFromRGBA('liquid')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">A</div>
+                                    <input type="number" id="liquid-a" min="0" max="100" value="100" oninput="updateFromRGBA('liquid')">
+                                </div>
+                            </div>
+                        </details>
+
+                        <label style="margin-top: 10px; font-size: 12px;">Cor da base:</label>
+                        <input type="color" id="liquidGradientColor" value="#ff46f6" onchange="updateFromPicker('gradient')">
+                        <details class="advanced-color">
+                            <summary>Avançado (RGBA)</summary>
+                            <div class="rgba-inputs">
+                                <div>
+                                    <div class="rgba-label">R</div>
+                                    <input type="number" id="gradient-r" min="0" max="255" value="255" oninput="updateFromRGBA('gradient')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">G</div>
+                                    <input type="number" id="gradient-g" min="0" max="255" value="70" oninput="updateFromRGBA('gradient')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">B</div>
+                                    <input type="number" id="gradient-b" min="0" max="255" value="246" oninput="updateFromRGBA('gradient')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">A</div>
+                                    <input type="number" id="gradient-a" min="0" max="100" value="100" oninput="updateFromRGBA('gradient')">
+                                </div>
+                            </div>
+                        </details>
+
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Equilíbrio do degradê</span>
+                                <span id="gradient-balance-val">50%</span>
+                            </div>
+                            <input type="range" id="gradient-balance" min="0" max="100" value="50" oninput="updateGradientBalance()">
+                        </div>
+                    </div>
+                </details>
             </div>
 
             <div class="config-item">
-                <label>Cor de Preenchimento:</label>
-                <input type="color" id="fillColor" value="#333333" onchange="updateColors()">
+                <details class="color-block">
+                    <summary>Cor de Preenchimento</summary>
+                    <div class="color-section">
+                        <input type="color" id="fillColor" value="#333333" onchange="updateFromPicker('fill')">
+                        <details class="advanced-color">
+                            <summary>Avançado (RGBA)</summary>
+                            <div class="rgba-inputs">
+                                <div>
+                                    <div class="rgba-label">R</div>
+                                    <input type="number" id="fill-r" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">G</div>
+                                    <input type="number" id="fill-g" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">B</div>
+                                    <input type="number" id="fill-b" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">A</div>
+                                    <input type="number" id="fill-a" min="0" max="100" value="100" oninput="updateFromRGBA('fill')">
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
             </div>
 
             <div class="config-item">
-                <label>Cor do Fundo:</label>
-                <input type="color" id="bgColor" value="#000000" onchange="updateColors()">
+                <details class="color-block">
+                    <summary>Cor do Fundo</summary>
+                    <div class="color-section">
+                        <input type="color" id="bgColor" value="#000000" onchange="updateFromPicker('bg')">
+                        <details class="advanced-color">
+                            <summary>Avançado (RGBA)</summary>
+                            <div class="rgba-inputs">
+                                <div>
+                                    <div class="rgba-label">R</div>
+                                    <input type="number" id="bg-r" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">G</div>
+                                    <input type="number" id="bg-g" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">B</div>
+                                    <input type="number" id="bg-b" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
+                                </div>
+                                <div>
+                                    <div class="rgba-label">A</div>
+                                    <input type="number" id="bg-a" min="0" max="100" value="100" oninput="updateFromRGBA('bg')">
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
             </div>
 
             <div class="divider"></div>
 
-            <div class="controls-buttons">
+            <div class="config-item">
+                <details class="color-block">
+                    <summary>💾 Presets</summary>
+                    <div class="color-section">
+                        <label style="font-size: 12px;">Nome do preset:</label>
+                        <input type="text" id="presetName" placeholder="Meu Preset" style="width: 100%; padding: 8px; border: 2px solid #00d4ff; border-radius: 5px; margin-bottom: 10px;">
+                        
+                        <button onclick="savePreset()" style="width: 100%; margin-bottom: 5px;">💾 Salvar Preset</button>
+                        <button onclick="saveAsDefault()" style="width: 100%; margin-bottom: 10px; background: rgba(255, 165, 0, 0.3);">⭐ Salvar como Padrão</button>
+                        
+                        <label style="font-size: 12px; margin-top: 5px;">Presets salvos:</label>
+                        <div id="presetList" style="display: flex; flex-direction: column; gap: 5px; max-height: 200px; overflow-y: auto;">
+                            <div style="color: #aaa; font-size: 12px; text-align: center; padding: 10px;">Nenhum preset salvo</div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <div class="divider"></div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
                 <button onclick="startTimer()">▶ Iniciar</button>
                 <button onclick="pauseTimer()">⏸ Pausar</button>
                 <button onclick="resetTimer()">↻ Reset</button>
@@ -269,149 +552,286 @@
         <div class="timer-liquid" id="timer-liquid">05:00</div>
     </div>
 
+    <div class="timer-actions">
+        <button onclick="startTimer()">▶ Iniciar</button>
+        <button onclick="pauseTimer()">⏸ Pausar</button>
+        <button onclick="resetTimer()">↻ Reset</button>
+    </div>
+
     <script>
-        let totalSeconds = 300;
-        let currentSeconds = 300;
+        let totalMs = 300000;
+        let currentMs = 300000;
+        const TICK_MS = 100;
         let interval = null;
         let isRunning = false;
         let mode = 'countdown';
 
+        // Sistema de Presets
+        function getCurrentConfig() {
+            return {
+                mode: mode,
+                days: document.getElementById('days').value,
+                hours: document.getElementById('hours').value,
+                minutes: document.getElementById('minutes').value,
+                seconds: document.getElementById('seconds').value,
+                milliseconds: document.getElementById('milliseconds').value,
+                unitDays: document.getElementById('unit-days').checked,
+                unitHours: document.getElementById('unit-hours').checked,
+                unitMinutes: document.getElementById('unit-minutes').checked,
+                unitSeconds: document.getElementById('unit-seconds').checked,
+                unitMilliseconds: document.getElementById('unit-milliseconds').checked,
+                outlineR: document.getElementById('outline-r').value,
+                outlineG: document.getElementById('outline-g').value,
+                outlineB: document.getElementById('outline-b').value,
+                outlineA: document.getElementById('outline-a').value,
+                liquidR: document.getElementById('liquid-r').value,
+                liquidG: document.getElementById('liquid-g').value,
+                liquidB: document.getElementById('liquid-b').value,
+                liquidA: document.getElementById('liquid-a').value,
+                gradientR: document.getElementById('gradient-r').value,
+                gradientG: document.getElementById('gradient-g').value,
+                gradientB: document.getElementById('gradient-b').value,
+                gradientA: document.getElementById('gradient-a').value,
+                gradientBalance: document.getElementById('gradient-balance').value,
+                fillR: document.getElementById('fill-r').value,
+                fillG: document.getElementById('fill-g').value,
+                fillB: document.getElementById('fill-b').value,
+                fillA: document.getElementById('fill-a').value,
+                bgR: document.getElementById('bg-r').value,
+                bgG: document.getElementById('bg-g').value,
+                bgB: document.getElementById('bg-b').value,
+                bgA: document.getElementById('bg-a').value
+            };
+        }
+
+        function applyConfig(config) {
+            // Modo
+            const modeButtons = document.querySelectorAll('.mode-btn');
+            setMode(config.mode, config.mode === 'countdown' ? modeButtons[0] : modeButtons[1]);
+            
+            // Duração
+            document.getElementById('days').value = config.days;
+            document.getElementById('hours').value = config.hours;
+            document.getElementById('minutes').value = config.minutes;
+            document.getElementById('seconds').value = config.seconds;
+            document.getElementById('milliseconds').value = config.milliseconds;
+            
+            // Unidades
+            document.getElementById('unit-days').checked = config.unitDays;
+            document.getElementById('unit-hours').checked = config.unitHours;
+            document.getElementById('unit-minutes').checked = config.unitMinutes;
+            document.getElementById('unit-seconds').checked = config.unitSeconds;
+            document.getElementById('unit-milliseconds').checked = config.unitMilliseconds;
+            
+            // Cores
+            document.getElementById('outline-r').value = config.outlineR;
+            document.getElementById('outline-g').value = config.outlineG;
+            document.getElementById('outline-b').value = config.outlineB;
+            document.getElementById('outline-a').value = config.outlineA;
+            
+            document.getElementById('liquid-r').value = config.liquidR;
+            document.getElementById('liquid-g').value = config.liquidG;
+            document.getElementById('liquid-b').value = config.liquidB;
+            document.getElementById('liquid-a').value = config.liquidA;
+            
+            document.getElementById('gradient-r').value = config.gradientR;
+            document.getElementById('gradient-g').value = config.gradientG;
+            document.getElementById('gradient-b').value = config.gradientB;
+            document.getElementById('gradient-a').value = config.gradientA;
+            document.getElementById('gradient-balance').value = config.gradientBalance;
+            
+            document.getElementById('fill-r').value = config.fillR;
+            document.getElementById('fill-g').value = config.fillG;
+            document.getElementById('fill-b').value = config.fillB;
+            document.getElementById('fill-a').value = config.fillA;
+            
+            document.getElementById('bg-r').value = config.bgR;
+            document.getElementById('bg-g').value = config.bgG;
+            document.getElementById('bg-b').value = config.bgB;
+            document.getElementById('bg-a').value = config.bgA;
+            
+            // Sincronizar color pickers
+            updateFromRGBA('outline');
+            updateFromRGBA('liquid');
+            updateFromRGBA('gradient');
+            updateFromRGBA('fill');
+            updateFromRGBA('bg');
+            updateGradientBalance();
+            
+            applySettings();
+            applyColors();
+        }
+
+        function savePreset() {
+            const name = document.getElementById('presetName').value.trim();
+            if (!name) {
+                alert('Por favor, digite um nome para o preset!');
+                return;
+            }
+            
+            const presets = JSON.parse(localStorage.getItem('timerPresets') || '{}');
+            presets[name] = getCurrentConfig();
+            localStorage.setItem('timerPresets', JSON.stringify(presets));
+            
+            document.getElementById('presetName').value = '';
+            loadPresets();
+            alert(`Preset "${name}" salvo com sucesso!`);
+        }
+
+        function saveAsDefault() {
+            const config = getCurrentConfig();
+            localStorage.setItem('timerDefault', JSON.stringify(config));
+            loadPresets();
+            alert('Configuração salva como padrão!');
+        }
+
+        function loadPreset(name) {
+            const presets = JSON.parse(localStorage.getItem('timerPresets') || '{}');
+            if (presets[name]) {
+                applyConfig(presets[name]);
+            }
+        }
+
+        function deletePreset(name) {
+            if (!confirm(`Deseja realmente deletar o preset "${name}"?`)) return;
+            
+            const presets = JSON.parse(localStorage.getItem('timerPresets') || '{}');
+            delete presets[name];
+            localStorage.setItem('timerPresets', JSON.stringify(presets));
+            loadPresets();
+        }
+
+        function loadDefaultPreset() {
+            const defaultConfig = localStorage.getItem('timerDefault');
+            if (defaultConfig) {
+                applyConfig(JSON.parse(defaultConfig));
+            }
+        }
+
+        function loadPresets() {
+            const presets = JSON.parse(localStorage.getItem('timerPresets') || '{}');
+            const defaultConfig = localStorage.getItem('timerDefault');
+            const presetList = document.getElementById('presetList');
+            
+            if (Object.keys(presets).length === 0 && !defaultConfig) {
+                presetList.innerHTML = '<div style="color: #aaa; font-size: 12px; text-align: center; padding: 10px;">Nenhum preset salvo</div>';
+                return;
+            }
+            
+            let html = '';
+            
+            // Preset padrão
+            if (defaultConfig) {
+                html += `
+                    <div class="preset-item default">
+                        <button onclick="loadDefaultPreset()">⭐ Padrão</button>
+                        <button class="delete-btn" onclick="localStorage.removeItem('timerDefault'); loadPresets();">✕</button>
+                    </div>
+                `;
+            }
+            
+            // Outros presets
+            Object.keys(presets).sort().forEach(name => {
+                html += `
+                    <div class="preset-item">
+                        <button onclick="loadPreset('${name}')">${name}</button>
+                        <button class="delete-btn" onclick="deletePreset('${name}')">✕</button>
+                    </div>
+                `;
+            });
+            
+            presetList.innerHTML = html;
+        }
+
         function toggleControls() {
-            const panel = document.getElementById('controlsPanel');
-            panel.classList.toggle('hidden');
+            document.getElementById('controlsPanel').classList.toggle('hidden');
+        }
+
+        function getSelectedUnits() {
+            const units = [];
+            ['days', 'hours', 'minutes', 'seconds', 'milliseconds'].forEach(unit => {
+                if (document.getElementById(`unit-${unit}`)?.checked) units.push(unit);
+            });
+            return units.length ? units : ['minutes', 'seconds'];
+        }
+
+        function formatDisplayTime(totalMs) {
+            const units = getSelectedUnits();
+            let remaining = Math.max(0, totalMs);
+
+            const values = {
+                days: Math.floor(remaining / 86400000),
+                hours: Math.floor((remaining % 86400000) / 3600000),
+                minutes: Math.floor((remaining % 3600000) / 60000),
+                seconds: Math.floor((remaining % 60000) / 1000),
+                milliseconds: remaining % 1000
+            };
+
+            const mainUnits = units.filter(u => u !== 'milliseconds');
+            const segments = mainUnits.map(u => String(values[u]).padStart(2, '0'));
+            let text = segments.join(':');
+
+            if (units.includes('milliseconds')) {
+                const centis = Math.floor(values.milliseconds / 10);
+                text = text ? `${text}.${String(centis).padStart(2, '0')}` : String(centis).padStart(2, '0');
+            }
+
+            return text || '00:00';
         }
 
         function updateDisplay() {
-            let displaySeconds = mode === 'countdown' ? currentSeconds : (totalSeconds - currentSeconds);
-            const minutes = Math.floor(displaySeconds / 60);
-            const seconds = displaySeconds % 60;
-            const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            
+            const displayMs = mode === 'countdown' ? currentMs : (totalMs - currentMs);
+            const display = formatDisplayTime(displayMs);
+
             document.getElementById('timer-base').textContent = display;
             document.getElementById('timer-liquid').textContent = display;
-            
-            let percentage;
-            if (mode === 'countdown') {
-                percentage = (currentSeconds / totalSeconds) * 100;
-            } else {
-                percentage = ((totalSeconds - currentSeconds) / totalSeconds) * 100;
-            }
-            
+
+            const percentage = totalMs > 0 ? (mode === 'countdown' ? (currentMs / totalMs) * 100 : ((totalMs - currentMs) / totalMs) * 100) : 0;
             updateClipPath(percentage);
         }
 
         function updateClipPath(percentage) {
-            const liquidElement = document.getElementById('timer-liquid');
-            const topEdge = 100 - percentage;
-            
-            const keyframe1 = `
-                0% {
-                    clip-path: polygon(
-                        0% ${topEdge}%, 
-                        10% ${topEdge - 2}%, 
-                        20% ${topEdge - 3}%,
-                        30% ${topEdge - 2}%,
-                        40% ${topEdge + 1}%, 
-                        50% ${topEdge + 2}%, 
-                        60% ${topEdge + 1}%,
-                        70% ${topEdge - 1}%,
-                        80% ${topEdge - 2}%,
-                        90% ${topEdge - 1}%,
-                        100% ${topEdge}%,
-                        100% 100%, 0% 100%
-                    );
-                }
-                25% {
-                    clip-path: polygon(
-                        0% ${topEdge - 1}%, 
-                        10% ${topEdge + 1}%, 
-                        20% ${topEdge + 2}%,
-                        30% ${topEdge + 3}%,
-                        40% ${topEdge + 2}%, 
-                        50% ${topEdge}%, 
-                        60% ${topEdge - 2}%,
-                        70% ${topEdge - 3}%,
-                        80% ${topEdge - 2}%,
-                        90% ${topEdge}%,
-                        100% ${topEdge + 1}%,
-                        100% 100%, 0% 100%
-                    );
-                }
-                50% {
-                    clip-path: polygon(
-                        0% ${topEdge + 2}%, 
-                        10% ${topEdge + 3}%, 
-                        20% ${topEdge + 2}%,
-                        30% ${topEdge}%,
-                        40% ${topEdge - 2}%, 
-                        50% ${topEdge - 3}%, 
-                        60% ${topEdge - 2}%,
-                        70% ${topEdge + 1}%,
-                        80% ${topEdge + 2}%,
-                        90% ${topEdge + 3}%,
-                        100% ${topEdge + 2}%,
-                        100% 100%, 0% 100%
-                    );
-                }
-                75% {
-                    clip-path: polygon(
-                        0% ${topEdge + 1}%, 
-                        10% ${topEdge - 1}%, 
-                        20% ${topEdge - 2}%,
-                        30% ${topEdge - 2}%,
-                        40% ${topEdge - 1}%, 
-                        50% ${topEdge + 1}%, 
-                        60% ${topEdge + 3}%,
-                        70% ${topEdge + 2}%,
-                        80% ${topEdge}%,
-                        90% ${topEdge - 2}%,
-                        100% ${topEdge - 1}%,
-                        100% 100%, 0% 100%
-                    );
-                }
-                100% {
-                    clip-path: polygon(
-                        0% ${topEdge}%, 
-                        10% ${topEdge - 2}%, 
-                        20% ${topEdge - 3}%,
-                        30% ${topEdge - 2}%,
-                        40% ${topEdge + 1}%, 
-                        50% ${topEdge + 2}%, 
-                        60% ${topEdge + 1}%,
-                        70% ${topEdge - 1}%,
-                        80% ${topEdge - 2}%,
-                        90% ${topEdge - 1}%,
-                        100% ${topEdge}%,
-                        100% 100%, 0% 100%
-                    );
+            const topEdge = 100 - (15 + (percentage / 100) * 60);
+            const keyframes = `
+                @keyframes waveAnimation {
+                    0%, 100% {
+                        clip-path: polygon(
+                            0% ${topEdge}%, 10% ${topEdge-2}%, 20% ${topEdge-3}%, 30% ${topEdge-2}%, 40% ${topEdge+1}%,
+                            50% ${topEdge+2}%, 60% ${topEdge+1}%, 70% ${topEdge-1}%, 80% ${topEdge-2}%, 90% ${topEdge-1}%,
+                            100% ${topEdge}%, 100% 100%, 0% 100%
+                        );
+                    }
+                    50% {
+                        clip-path: polygon(
+                            0% ${topEdge+2}%, 10% ${topEdge+3}%, 20% ${topEdge+2}%, 30% ${topEdge}%, 40% ${topEdge-2}%,
+                            50% ${topEdge-3}%, 60% ${topEdge-2}%, 70% ${topEdge+1}%, 80% ${topEdge+2}%, 90% ${topEdge+3}%,
+                            100% ${topEdge+2}%, 100% 100%, 0% 100%
+                        );
+                    }
                 }
             `;
-            
-            const styleSheet = document.styleSheets[0];
-            const rules = styleSheet.cssRules || styleSheet.rules;
-            
-            for (let i = rules.length - 1; i >= 0; i--) {
-                if (rules[i].name === 'waveAnimation') {
-                    styleSheet.deleteRule(i);
+
+            const sheet = document.styleSheets[0];
+            for (let i = sheet.cssRules.length - 1; i >= 0; i--) {
+                if (sheet.cssRules[i].name === 'waveAnimation') {
+                    sheet.deleteRule(i);
                     break;
                 }
             }
-            
-            styleSheet.insertRule(`@keyframes waveAnimation { ${keyframe1} }`, styleSheet.cssRules.length);
+            sheet.insertRule(keyframes, sheet.cssRules.length);
         }
 
         function startTimer() {
             if (isRunning) return;
-            
             isRunning = true;
             interval = setInterval(() => {
-                if (currentSeconds > 0) {
-                    currentSeconds--;
+                if (currentMs > 0) {
+                    currentMs = Math.max(0, currentMs - TICK_MS);
                     updateDisplay();
                 } else {
                     pauseTimer();
                 }
-            }, 1000);
+            }, TICK_MS);
         }
 
         function pauseTimer() {
@@ -424,57 +844,128 @@
 
         function resetTimer() {
             pauseTimer();
-            currentSeconds = totalSeconds;
+            currentMs = totalMs;
             updateDisplay();
         }
 
         function applySettings() {
+            const days = parseInt(document.getElementById('days').value) || 0;
+            const hours = parseInt(document.getElementById('hours').value) || 0;
             const minutes = parseInt(document.getElementById('minutes').value) || 0;
             const seconds = parseInt(document.getElementById('seconds').value) || 0;
-            totalSeconds = (minutes * 60) + seconds;
-            currentSeconds = totalSeconds;
+            const millis = Math.max(0, Math.min(999, parseInt(document.getElementById('milliseconds').value) || 0));
+
+            totalMs = ((((days * 24 + hours) * 60 + minutes) * 60 + seconds) * 1000) + millis;
+            currentMs = Math.max(0, totalMs);
             updateDisplay();
         }
 
-        function setMode(newMode) {
+        function setMode(newMode, btn) {
             mode = newMode;
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
             resetTimer();
         }
 
-        function updateColors() {
-            const outlineColor = document.getElementById('outlineColor').value;
-            const liquidColor = document.getElementById('liquidColor').value;
-            const fillColor = document.getElementById('fillColor').value;
-            const bgColor = document.getElementById('bgColor').value;
-            
-            document.getElementById('timer-base').style.webkitTextStroke = `4px ${outlineColor}`;
-            document.getElementById('timer-base').style.textStroke = `4px ${outlineColor}`;
-            document.getElementById('timer-base').style.color = fillColor;
-            
-            const darkerLiquid = shadeColor(liquidColor, -20);
-            const liquidElement = document.getElementById('timer-liquid');
-            liquidElement.style.background = `linear-gradient(180deg, ${liquidColor} 0%, ${darkerLiquid} 100%)`;
-            liquidElement.style.webkitBackgroundClip = 'text';
-            liquidElement.style.backgroundClip = 'text';
-            liquidElement.style.webkitTextFillColor = 'transparent';
-            
-            document.body.style.background = bgColor;
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : {r: 0, g: 0, b: 0};
         }
 
-        function shadeColor(color, percent) {
-            const num = parseInt(color.replace("#",""), 16);
-            const amt = Math.round(2.55 * percent);
-            const R = (num >> 16) + amt;
-            const G = (num >> 8 & 0x00FF) + amt;
-            const B = (num & 0x0000FF) + amt;
-            return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 +
-                (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255))
-                .toString(16).slice(1);
+        function rgbToHex(r, g, b) {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
         }
 
+        function updateFromPicker(type) {
+            const colorId = type === 'gradient' ? 'liquidGradientColor' : 
+                          type === 'liquid' ? 'liquidColor' : 
+                          type === 'outline' ? 'outlineColor' :
+                          type === 'fill' ? 'fillColor' : 'bgColor';
+            
+            const color = document.getElementById(colorId).value;
+            const rgb = hexToRgb(color);
+            
+            const prefix = type;
+            document.getElementById(`${prefix}-r`).value = rgb.r;
+            document.getElementById(`${prefix}-g`).value = rgb.g;
+            document.getElementById(`${prefix}-b`).value = rgb.b;
+            
+            applyColors();
+        }
+
+        function updateFromRGBA(type) {
+            const r = parseInt(document.getElementById(`${type}-r`).value) || 0;
+            const g = parseInt(document.getElementById(`${type}-g`).value) || 0;
+            const b = parseInt(document.getElementById(`${type}-b`).value) || 0;
+            
+            const hex = rgbToHex(
+                Math.max(0, Math.min(255, r)),
+                Math.max(0, Math.min(255, g)),
+                Math.max(0, Math.min(255, b))
+            );
+            
+            const colorId = type === 'gradient' ? 'liquidGradientColor' : 
+                          type === 'liquid' ? 'liquidColor' : 
+                          type === 'outline' ? 'outlineColor' :
+                          type === 'fill' ? 'fillColor' : 'bgColor';
+            
+            document.getElementById(colorId).value = hex;
+            applyColors();
+        }
+
+        function updateGradientBalance() {
+            const balance = document.getElementById('gradient-balance').value;
+            document.getElementById('gradient-balance-val').textContent = balance + '%';
+            applyColors();
+        }
+
+        function getRGBA(type) {
+            const r = Math.max(0, Math.min(255, parseInt(document.getElementById(`${type}-r`).value) || 0));
+            const g = Math.max(0, Math.min(255, parseInt(document.getElementById(`${type}-g`).value) || 0));
+            const b = Math.max(0, Math.min(255, parseInt(document.getElementById(`${type}-b`).value) || 0));
+            const a = Math.max(0, Math.min(100, parseInt(document.getElementById(`${type}-a`).value) || 100)) / 100;
+            return `rgba(${r}, ${g}, ${b}, ${a})`;
+        }
+
+        function applyColors() {
+            const base = document.getElementById('timer-base');
+            const liquid = document.getElementById('timer-liquid');
+            
+            // Contorno
+            const outlineColor = getRGBA('outline');
+            base.style.webkitTextStroke = `4px ${outlineColor}`;
+            base.style.textStroke = `4px ${outlineColor}`;
+            
+            // Preenchimento
+            base.style.color = getRGBA('fill');
+            
+            // Líquido com degradê e equilíbrio
+            const liquidTop = getRGBA('liquid');
+            const liquidBottom = getRGBA('gradient');
+            const balance = parseInt(document.getElementById('gradient-balance').value) || 50;
+            
+            liquid.style.background = `linear-gradient(180deg, ${liquidTop} 0%, ${liquidTop} ${balance}%, ${liquidBottom} 100%)`;
+            liquid.style.webkitBackgroundClip = 'text';
+            liquid.style.backgroundClip = 'text';
+            liquid.style.webkitTextFillColor = 'transparent';
+            
+            // Fundo
+            document.body.style.background = getRGBA('bg');
+        }
+
+        // Inicialização
         updateDisplay();
+        applyColors();
+        loadPresets();
+        
+        // Carregar preset padrão ao iniciar
+        window.addEventListener('load', () => {
+            loadDefaultPreset();
+        });
     </script>
 </body>
 </html>
