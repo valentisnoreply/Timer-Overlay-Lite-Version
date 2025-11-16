@@ -23,6 +23,8 @@ Pururin!!! Criei esse cronômetro com um efeito líquido pra usar nas minhas liv
 Fiz pra usar no OBS durante streams, mas dá pra achar várias utilidades kkk.
 Ainda está em desenvolvimento, mas espero que gostem :3
 
+Obs. não tá otimizado para celular .-.
+
 <div align="center">
   <a href="https://valentisnoreply.github.io/Timer-Overlay-Lite-Version/" target="_blank"> Faça o teste ♥ </a>
 </div>
