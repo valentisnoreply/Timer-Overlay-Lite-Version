@@ -10,7 +10,7 @@
 
   ### ✨ Um timer animado e customizável perfeito para streams! ✨
   
-  [Demo](#) • [Features](#-features) • [Créditos](#-me-acha-aqui)
+  [Demo](#) • [Features](#-features) • [Créditos](@Valenchibi)
 
 </div>
 
