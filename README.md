@@ -10,7 +10,7 @@
 
   ### ✨ Um timer animado e customizável perfeito para streams! ✨
   
-  [Demo](#) • [Features](#-features) • [Créditos](@Valenchibi)
+  [Demo](https://valentisnoreply.github.io/Timer-Overlay-Lite-Version/) • [Features](#-features) • [Créditos](https://github.com/valentisnoreply)
 
 </div>
 
@@ -26,7 +26,9 @@ Ainda está em desenvolvimento, mas espero que gostem :3
 Obs. não tá otimizado para celular .-.
 
 <div align="center">
-  <a href="https://valentisnoreply.github.io/Timer-Overlay-Lite-Version/" target="_blank"> Faça o teste ♥ </a>
+  <a href="https://valentisnoreply.github.io/Timer-Overlay-Lite-Version/" target="_blank" rel="noopener noreferrer">
+  Abrir o Timer-Overlay Lite
+</a>
 </div>
 
 ---
