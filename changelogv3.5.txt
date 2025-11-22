@@ -1,0 +1,176 @@
+
+# Changelog - Liquid Timer V3.5
+
+## 🎨 Reorganização do Painel de Controles
+
+### ✨ Melhorias Estruturais
+- **Painel categorizado em 5 seções recolhíveis (accordion)**:
+  - 📊 **Contador** - Controles de fonte, tamanho, cores e borda
+  - 💧 **Líquido** - Controles de cores do líquido, degradê e limites
+  - 🎨 **Fundo** - Cor do fundo
+  - ⏱️ **Temporizador** - Modo, duração e unidades exibidas
+  - 🔧 **Geral** - Som, presets e ações do timer
+
+- Cada seção usa `<details class="config-category">` para melhor organização visual
+- Agrupamento lógico de controles relacionados em cada categoria
+
+---
+
+## 🎯 Novas Funcionalidades - Contador (📊)
+
+### Controle de Fonte
+- Seletor de fonte com 5 opções: Roboto, Arial, Courier New, Times New Roman, Comic Sans MS
+- Display em tempo real da fonte selecionada
+- Persistência no localStorage
+
+### Controle de Tamanho
+- Slider de tamanho de fonte: 40px - 300px (padrão: 150px)
+- Display do valor em tempo real (`#fontSizeVal`)
+- Atualização dinâmica do timer
+- Função: `updateFont()`
+
+### Controle de Borda (Novo)
+- **Espessura da borda**: Slider de 0px - 10px (padrão: 4px)
+  - Display em tempo real do valor
+  - Função: `updateOutlineWidth()`
+  - Salvo em localStorage
+
+- **Ativar/Desativar borda**: Checkbox booleano
+  - Quando desativado (0px), a borda fica invisível
+  - Função: `toggleOutline()`
+  - Salvo em localStorage
+
+### Cores do Contador
+- **Cor do Contorno**: Picker + RGBA avançado (R, G, B, A 0-100%)
+- **Cor do Preenchimento**: Picker + RGBA avançado (R, G, B, A 0-100%)
+- Conversão automática hex ↔ RGBA
+- Atualização em tempo real
+
+---
+
+## 💧 Novas Funcionalidades - Líquido
+
+### Cores
+- **Cor do Topo**: Picker + RGBA avançado
+- **Cor da Base**: Picker + RGBA avançado
+- Gradiente linear automático entre topo e base
+
+### Controle de Equilíbrio
+- **Equilíbrio do Degradê**: Slider 0% - 100% (padrão: 50%)
+- Define onde a cor do topo termina e a base começa
+- Função: `updateGradientBalance()`
+
+### Limite Superior (Novo)
+- **Limite Superior do Líquido**: Slider 0% - 50% (padrão: 22%)
+- Controla a posição máxima que o líquido pode atingir (topo)
+- Display em tempo real do valor (`#liquidTopEdge-val`)
+- Função: `updateLiquidTopEdge()`
+- Salvo em localStorage
+
+---
+
+## 🎨 Fundo
+
+### Cor do Fundo
+- **Cor do Fundo**: Picker + RGBA avançado
+- Controla a cor de fundo da página
+- Atualização em tempo real
+
+---
+
+## ⏱️ Temporizador
+
+### Modo
+- Botões: **Regressiva** (countdown) e **Progressiva** (countup)
+- Estado visual do botão ativo
+
+### Duração
+- Inputs para: Dias, Horas, Minutos, Segundos, Milissegundos
+- Validação de range (ex: 0-59 minutos)
+
+### Unidades Exibidas
+- Checkboxes para cada unidade de tempo
+- Padrão: Minutos e Segundos ativados
+- Função: `updateDisplay()`
+
+### Botão Aplicar
+- **✓ Aplicar Duração**: Aplica as mudanças de duração imediatamente
+- Função: `applySettings()`
+
+---
+
+## 🔧 Geral
+
+### Som de Finalização (Expandido)
+- ✅ Checkbox para ativar/desativar
+- 📁 Upload de arquivo (máx 2MB)
+- 🎚️ Slider de volume (0-100%)
+- 🔊 Botão para testar som
+- Suporte a: MP3, WAV, OGG
+
+### Presets
+- 💾 Salvar preset com nome customizado
+- ⭐ Salvar como padrão global
+- 📋 Lista de presets salvos (com delete)
+- Carregamento automático ao abrir
+
+### Ações do Timer
+- ▶ **Iniciar**: Inicia a contagem
+- ⏸ **Pausar**: Pausa a contagem
+- ↻ **Reset**: Reseta para o tempo inicial
+
+---
+
+## 🔄 Funções Adicionadas/Atualizadas
+
+### Novas Funções
+javascript
+
+updateOutlineWidth()        // Atualiza espessura da borda
+toggleOutline()            // Ativa/desativa a borda
+updateLiquidTopEdge()      // Atualiza limite superior do líquido
+updateFont()               // Atualiza fonte e tamanho
+loadFontSettings()         // Carrega configurações de fonte do localStorage
+loadOutlineSettings()      // Carrega configurações de borda do localStorage
+loadLiquidTopEdge()        // Carrega limite superior do localStorage
+
+
+## Funções  Novas/Modificadas
+
+- applyConfig() removido por hora
+- 
+
+## 💾 LocalStorage
+
+Novas chaves para armazenar presets (Experimental): 
+
+timerFontFamily         Fonte selecionada
+timerFontSize           Tamanho da fonte em px
+timerOutlineWidth       Espessura da borda em px
+timerOutlineEnabled     Borda ativa (true/false)
+timerLiquidTopEdge      Limite superior do líquido em %
+
+
+## 🎯 Melhorias Visuais
+
+- Estrutura melhorada 
+- iconizinhos mais bonitinhos
+- Sliders com labels pra arrastar
+- RGBA Avançado escondido
+- Divisão das categorias de opções
+- Mais responsivo, eu acho. 
+
+
+## 🔧 Compatibilidade
+
+- Sem dependencias externas, compatibildade com presets antigos.
+
+## 📝 Próximas Melhorias 
+
+- Não sei
+
+
+
+**Versão**: V3.5  
+**Data de Atualização**: 21 de Novembro de 2025  
+**Autora**: Valentina Sanchez

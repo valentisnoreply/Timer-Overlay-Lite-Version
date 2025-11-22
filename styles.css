@@ -21,11 +21,11 @@ body {
 }
 
 .timer-base {
-    font-size: 150px;
+    font-size: 150px; /* valor padrão, pode ser sobrescrito inline */
     font-weight: 900;
     color: #fdfdfd;
     -webkit-text-stroke: 4px #fff;
-    text-stroke: 4px #fff;
+    text-shadow: 4px #fff;
     position: relative;
 }
 
@@ -33,11 +33,12 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 150px;
+    font-size: 150px; /* valor padrão, pode ser sobrescrito inline */
     font-weight: 900;
     background: linear-gradient(180deg, #00d4ff 0%, #ff46f6 100%);
     -webkit-background-clip: text;
     background-clip: text;
+    -webkit-text-stroke: 4px #ffffff;
     -webkit-text-fill-color: transparent;
     animation: waveAnimation 4s ease-in-out infinite;
 }
@@ -153,6 +154,7 @@ input[type="range"]::-moz-range-thumb {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    color: #fff;
 }
 
 .config-item {

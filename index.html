@@ -11,210 +11,267 @@
 
     <div class="controls-panel" id="controlsPanel">
         <div class="config-section">
-            <h3 style="color: #fff; text-align: center;">Configurações</h3>
-            
-            <div class="config-item">
-                <label>Modo:</label>
-                <div class="mode-toggle">
-                    <button class="mode-btn active" onclick="setMode('countdown', this)">Regressiva</button>
-                    <button class="mode-btn" onclick="setMode('countup', this)">Progressiva</button>
-                </div>
-            </div>
+            <h3 style="color: #ffffff; text-align: center;">Configurações</h3>
 
-            <div class="config-item">
-                <label>Duração:</label>
-                <div class="time-inputs">
-                    <input type="number" id="days" value="0" min="0" max="999">
-                    <span style="color: #fff;">dia</span>
-                    <input type="number" id="hours" value="0" min="0" max="23">
-                    <span style="color: #fff;">h</span>
-                </div>
-                <div class="time-inputs">
-                    <input type="number" id="minutes" value="5" min="0" max="59">
-                    <span style="color: #fff;">min</span>
-                    <input type="number" id="seconds" value="0" min="0" max="59">
-                    <span style="color: #fff;">seg</span>
-                </div>
-                <div class="time-inputs">
-                    <input type="number" id="milliseconds" value="0" min="0" max="999">
-                    <span style="color: #fff;">ms</span>
-                </div>
-            </div>
-
-            <div class="config-item">
-                <label>Unidades exibidas:</label>
-                <div class="units-toggle">
-                    <label><input type="checkbox" id="unit-days" onchange="updateDisplay()"> Dia</label>
-                    <label><input type="checkbox" id="unit-hours" onchange="updateDisplay()"> Hora</label>
-                    <label><input type="checkbox" id="unit-minutes" checked onchange="updateDisplay()"> Minuto</label>
-                    <label><input type="checkbox" id="unit-seconds" checked onchange="updateDisplay()"> Segundo</label>
-                    <label><input type="checkbox" id="unit-milliseconds" onchange="updateDisplay()"> Milésimo</label>
-                </div>
-            </div>
-
-            <button onclick="applySettings()">✓ Aplicar Duração</button>
-
-            <div class="divider"></div>
-
-            <div class="config-item">
-                <details class="color-block">
-                    <summary>Cor do Contorno</summary>
-                    <div class="color-section">
-                        <input type="color" id="outlineColor" value="#ffffff" onchange="updateFromPicker('outline')">
-                        <details class="advanced-color">
-                            <summary>Avançado (RGBA)</summary>
-                            <div class="rgba-inputs">
-                                <div>
-                                    <div class="rgba-label">R</div>
-                                    <input type="number" id="outline-r" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">G</div>
-                                    <input type="number" id="outline-g" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">B</div>
-                                    <input type="number" id="outline-b" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">A</div>
-                                    <input type="number" id="outline-a" min="0" max="100" value="100" oninput="updateFromRGBA('outline')">
-                                </div>
-                            </div>
-                        </details>
+            <!-- CONTADOR -->
+            <details class="config-category" close>
+                <summary>📊 Contador</summary>
+                <div class="color-section">
+                    <div class="config-item">
+                        <label>Fonte:</label>
+                        <select id="fontFamily" onchange="updateFont()" style="width: 100%; padding: 6px; border-radius: 5px; border: 2px solid #00d4ff;">
+                            <option value="Roboto, sans-serif">Roboto</option>
+                            <option value="Arial, Helvetica, sans-serif">Arial</option>
+                            <option value="'Courier New', Courier, monospace">Courier New</option>
+                            <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                            <option value="'Comic Sans MS', cursive, sans-serif">Comic Sans MS</option>
+                        </select>
                     </div>
-                </details>
-            </div>
-
-            <div class="config-item">
-                <details class="color-block">
-                    <summary>Cor do Líquido</summary>
-                    <div class="color-section">
-                        <label style="font-size: 12px;">Cor do topo:</label>
-                        <input type="color" id="liquidColor" value="#00d4ff" onchange="updateFromPicker('liquid')">
-                        <details class="advanced-color">
-                            <summary>Avançado (RGBA)</summary>
-                            <div class="rgba-inputs">
-                                <div>
-                                    <div class="rgba-label">R</div>
-                                    <input type="number" id="liquid-r" min="0" max="255" value="0" oninput="updateFromRGBA('liquid')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">G</div>
-                                    <input type="number" id="liquid-g" min="0" max="255" value="212" oninput="updateFromRGBA('liquid')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">B</div>
-                                    <input type="number" id="liquid-b" min="0" max="255" value="255" oninput="updateFromRGBA('liquid')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">A</div>
-                                    <input type="number" id="liquid-a" min="0" max="100" value="100" oninput="updateFromRGBA('liquid')">
-                                </div>
-                            </div>
-                        </details>
-
-                        <label style="margin-top: 10px; font-size: 12px;">Cor da base:</label>
-                        <input type="color" id="liquidGradientColor" value="#ff46f6" onchange="updateFromPicker('gradient')">
-                        <details class="advanced-color">
-                            <summary>Avançado (RGBA)</summary>
-                            <div class="rgba-inputs">
-                                <div>
-                                    <div class="rgba-label">R</div>
-                                    <input type="number" id="gradient-r" min="0" max="255" value="255" oninput="updateFromRGBA('gradient')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">G</div>
-                                    <input type="number" id="gradient-g" min="0" max="255" value="70" oninput="updateFromRGBA('gradient')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">B</div>
-                                    <input type="number" id="gradient-b" min="0" max="255" value="246" oninput="updateFromRGBA('gradient')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">A</div>
-                                    <input type="number" id="gradient-a" min="0" max="100" value="100" oninput="updateFromRGBA('gradient')">
-                                </div>
-                            </div>
-                        </details>
-
+                    <div class="config-item">
+                        <label>Tamanho:</label>
                         <div class="slider-container">
                             <div class="slider-label">
-                                <span>Equilíbrio do degradê</span>
+                                <span>Tamanho (px)</span>
+                                <span id="fontSizeVal">150px</span>
+                            </div>
+                            <input type="range" id="fontSize" min="40" max="300" value="150" oninput="updateFont()">
+                        </div>
+                    </div>
+                    <div class="config-item">
+                        <label>Cor do Contorno:</label>
+                        <input type="color" id="outlineColor" value="#ffffff" onchange="updateFromPicker('outline')" style="width: 100%; height: 40px; border-radius: 5px;">
+                    </div>
+                    <div class="config-item">
+                        <label>Espessura da Borda (px):</label>
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Espessura</span>
+                                <span id="outlineWidthVal">4px</span>
+                            </div>
+                            <input type="range" id="outlineWidth" min="0" max="10" value="4" oninput="updateOutlineWidth()">
+                        </div>
+                    </div>
+                    <div class="config-item">
+                        <label>
+                            <input type="checkbox" id="outlineEnabled" checked onchange="toggleOutline()">
+                            Borda Ativa
+                        </label>
+                    </div>
+                    <div class="config-item">
+                        <label>Cor do Preenchimento:</label>
+                        <input type="color" id="fillColor" value="#333333" onchange="updateFromPicker('fill')" style="width: 100%; height: 40px; border-radius: 5px;">
+                    </div>
+                    <details class="advanced-color">
+                        <summary>Avançado - Cor do Contorno (RGBA)</summary>
+                        <div class="rgba-inputs">
+                            <div>
+                                <div class="rgba-label">R</div>
+                                <input type="number" id="outline-r" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">G</div>
+                                <input type="number" id="outline-g" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">B</div>
+                                <input type="number" id="outline-b" min="0" max="255" value="255" oninput="updateFromRGBA('outline')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">A</div>
+                                <input type="number" id="outline-a" min="0" max="100" value="100" oninput="updateFromRGBA('outline')">
+                            </div>
+                        </div>
+                    </details>
+                    <details class="advanced-color">
+                        <summary>Avançado - Preenchimento (RGBA)</summary>
+                        <div class="rgba-inputs">
+                            <div>
+                                <div class="rgba-label">R</div>
+                                <input type="number" id="fill-r" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">G</div>
+                                <input type="number" id="fill-g" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">B</div>
+                                <input type="number" id="fill-b" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">A</div>
+                                <input type="number" id="fill-a" min="0" max="100" value="100" oninput="updateFromRGBA('fill')">
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </details>
+            </details>
+
+            <!-- LÍQUIDO -->
+            <details class="config-category">
+                <summary>💧 Líquido</summary>
+                <div class="color-section">
+                    <div class="config-item">
+                        <label>Cor do Topo:</label>
+                        <input type="color" id="liquidColor" value="#00d4ff" onchange="updateFromPicker('liquid')" style="width: 100%; height: 40px; border-radius: 5px;">
+                    </div>
+                    <details class="advanced-color">
+                        <summary>Avançado - Cor do Topo (RGBA)</summary>
+                        <div class="rgba-inputs">
+                            <div>
+                                <div class="rgba-label">R</div>
+                                <input type="number" id="liquid-r" min="0" max="255" value="0" oninput="updateFromRGBA('liquid')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">G</div>
+                                <input type="number" id="liquid-g" min="0" max="255" value="212" oninput="updateFromRGBA('liquid')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">B</div>
+                                <input type="number" id="liquid-b" min="0" max="255" value="255" oninput="updateFromRGBA('liquid')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">A</div>
+                                <input type="number" id="liquid-a" min="0" max="100" value="100" oninput="updateFromRGBA('liquid')">
+                            </div>
+                        </div>
+                    </details>
+                    <div class="config-item">
+                        <label>Cor da Base:</label>
+                        <input type="color" id="liquidGradientColor" value="#ff46f6" onchange="updateFromPicker('gradient')" style="width: 100%; height: 40px; border-radius: 5px;">
+                    </div>
+                    <details class="advanced-color">
+                        <summary>Avançado - Cor da Base (RGBA)</summary>
+                        <div class="rgba-inputs">
+                            <div>
+                                <div class="rgba-label">R</div>
+                                <input type="number" id="gradient-r" min="0" max="255" value="255" oninput="updateFromRGBA('gradient')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">G</div>
+                                <input type="number" id="gradient-g" min="0" max="255" value="70" oninput="updateFromRGBA('gradient')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">B</div>
+                                <input type="number" id="gradient-b" min="0" max="255" value="246" oninput="updateFromRGBA('gradient')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">A</div>
+                                <input type="number" id="gradient-a" min="0" max="100" value="100" oninput="updateFromRGBA('gradient')">
+                            </div>
+                        </div>
+                    </details>
+                    <div class="config-item">
+                        <label>Equilíbrio do Degradê:</label>
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Equilíbrio (%)</span>
                                 <span id="gradient-balance-val">50%</span>
                             </div>
                             <input type="range" id="gradient-balance" min="0" max="100" value="50" oninput="updateGradientBalance()">
                         </div>
                     </div>
-                </details>
-            </div>
-
-            <div class="config-item">
-                <details class="color-block">
-                    <summary>Cor de Preenchimento</summary>
-                    <div class="color-section">
-                        <input type="color" id="fillColor" value="#333333" onchange="updateFromPicker('fill')">
-                        <details class="advanced-color">
-                            <summary>Avançado (RGBA)</summary>
-                            <div class="rgba-inputs">
-                                <div>
-                                    <div class="rgba-label">R</div>
-                                    <input type="number" id="fill-r" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">G</div>
-                                    <input type="number" id="fill-g" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">B</div>
-                                    <input type="number" id="fill-b" min="0" max="255" value="51" oninput="updateFromRGBA('fill')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">A</div>
-                                    <input type="number" id="fill-a" min="0" max="100" value="100" oninput="updateFromRGBA('fill')">
-                                </div>
+                    <div class="config-item">
+                        <label>Limite Superior:</label>
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Limite (%)</span>
+                                <span id="liquidTopEdge-val">22</span>
                             </div>
-                        </details>
+                            <input type="range" id="liquidTopEdge" min="0" max="50" value="22" oninput="updateLiquidTopEdge()">
+                        </div>
                     </div>
-                </details>
-            </div>
+                </div>
+            </details>
 
-            <div class="config-item">
-                <details class="color-block">
-                    <summary>Cor do Fundo</summary>
-                    <div class="color-section">
-                        <input type="color" id="bgColor" value="#000000" onchange="updateFromPicker('bg')">
-                        <details class="advanced-color">
-                            <summary>Avançado (RGBA)</summary>
-                            <div class="rgba-inputs">
-                                <div>
-                                    <div class="rgba-label">R</div>
-                                    <input type="number" id="bg-r" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">G</div>
-                                    <input type="number" id="bg-g" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">B</div>
-                                    <input type="number" id="bg-b" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
-                                </div>
-                                <div>
-                                    <div class="rgba-label">A</div>
-                                    <input type="number" id="bg-a" min="0" max="100" value="100" oninput="updateFromRGBA('bg')">
-                                </div>
-                            </div>
-                        </details>
+            <!-- FUNDO -->
+            <details class="config-category">
+                <summary>🎨 Fundo</summary>
+                <div class="color-section">
+                    <div class="config-item">
+                        <label>Cor do Fundo:</label>
+                        <input type="color" id="bgColor" value="#000000" onchange="updateFromPicker('bg')" style="width: 100%; height: 40px; border-radius: 5px;">
                     </div>
-                </details>
-            </div>
+                    <details class="advanced-color">
+                        <summary>Avançado - Fundo (RGBA)</summary>
+                        <div class="rgba-inputs">
+                            <div>
+                                <div class="rgba-label">R</div>
+                                <input type="number" id="bg-r" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">G</div>
+                                <input type="number" id="bg-g" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">B</div>
+                                <input type="number" id="bg-b" min="0" max="255" value="0" oninput="updateFromRGBA('bg')">
+                            </div>
+                            <div>
+                                <div class="rgba-label">A</div>
+                                <input type="number" id="bg-a" min="0" max="100" value="100" oninput="updateFromRGBA('bg')">
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <!-- TIMER -->
+            <details class="config-category">
+                <summary>⏱️ Temporizador</summary>
+                <div class="color-section">
+                    <div class="config-item">
+                        <label>Modo:</label>
+                        <div class="mode-toggle">
+                            <button class="mode-btn active" onclick="setMode('countdown', this)">Regressiva</button>
+                            <button class="mode-btn" onclick="setMode('countup', this)">Progressiva</button>
+                        </div>
+                    </div>
+
+                    <div class="config-item">
+                        <label>Duração:</label>
+                        <div class="time-inputs">
+                            <input type="number" id="days" value="0" min="0" max="999">
+                            <span style="color: #fff;">dia</span>
+                            <input type="number" id="hours" value="0" min="0" max="23">
+                            <span style="color: #fff;">h</span>
+                        </div>
+                        <div class="time-inputs">
+                            <input type="number" id="minutes" value="5" min="0" max="59">
+                            <span style="color: #fff;">min</span>
+                            <input type="number" id="seconds" value="0" min="0" max="59">
+                            <span style="color: #fff;">seg</span>
+                        </div>
+                        <div class="time-inputs">
+                            <input type="number" id="milliseconds" value="0" min="0" max="999">
+                            <span style="color: #fff;">ms</span>
+                        </div>
+                    </div>
+
+                    <div class="config-item">
+                        <label>Unidades exibidas:</label>
+                        <div class="units-toggle">
+                            <label><input type="checkbox" id="unit-days" onchange="updateDisplay()"> Dia</label>
+                            <label><input type="checkbox" id="unit-hours" onchange="updateDisplay()"> Hora</label>
+                            <label><input type="checkbox" id="unit-minutes" checked onchange="updateDisplay()"> Minuto</label>
+                            <label><input type="checkbox" id="unit-seconds" checked onchange="updateDisplay()"> Segundo</label>
+                            <label><input type="checkbox" id="unit-milliseconds" onchange="updateDisplay()"> Milésimo</label>
+                        </div>
+                    </div>
+
+                    <button onclick="applySettings()" style="width: 100%;">✓ Aplicar Duração</button>
+                </div>
+            </details>
 
             <div class="divider"></div>
 
-            <div class="config-item">
-                <details class="color-block">
-                    <summary>🔊 Som de Finalização</summary>
-                    <div class="color-section">
+            <!-- GERAL -->
+            <details class="config-category">
+                <summary>🔧 Geral</summary>
+                <div class="color-section">
+                    <details class="color-block">
+                        <summary>🔊 Som de Finalização</summary>
+                        <div class="color-section">
                         <label style="font-size: 12px;">
                             <input type="checkbox" id="soundEnabled" onchange="toggleSound()"> Ativar som
                         </label>
@@ -239,15 +296,11 @@
                             <button onclick="testSound()" id="testSoundBtn" style="width: 100%; margin-top: 5px;">🔊 Testar Som</button>
                         </div>
                     </div>
-                </details>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="config-item">
-                <details class="color-block">
-                    <summary>💾 Presets</summary>
-                    <div class="color-section">
+                    </details>
+                    <div class="divider"></div>
+                    <details class="color-block">
+                        <summary>💾 Presets</summary>
+                        <div class="color-section">
                         <label style="font-size: 12px;">Nome do preset:</label>
                         <input type="text" id="presetName" placeholder="Meu Preset" style="width: 100%; padding: 8px; border: 2px solid #00d4ff; border-radius: 5px; margin-bottom: 10px;">
                         
@@ -259,22 +312,21 @@
                             <div style="color: #aaa; font-size: 12px; text-align: center; padding: 10px;">Nenhum preset salvo</div>
                         </div>
                     </div>
-                </details>
-            </div>
-
-            <div class="divider"></div>
-
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <button onclick="startTimer()">▶ Iniciar</button>
-                <button onclick="pauseTimer()">⏸ Pausar</button>
-                <button onclick="resetTimer()">↻ Reset</button>
-            </div>
+                    </details>
+                    <div class="divider"></div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <button onclick="startTimer()" style="width: 100%;">▶ Iniciar</button>
+                        <button onclick="pauseTimer()" style="width: 100%;">⏸ Pausar</button>
+                        <button onclick="resetTimer()" style="width: 100%;">↻ Reset</button>
+                    </div>
+                </div>
+            </details>
 
             <div class="divider"></div>
 
             <div style="text-align: center; padding: 15px 10px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
                 <p style="color: #aaa; font-size: 11px; margin-bottom: 8px;">Creator: <strong style="color: #00d4ff;">Valentina S.</strong></p>
-                <p style="color: #aaa; font-size: 10px; margin-bottom: 10px;">Versão <span id="appVersion">V3</span></p>
+                <p style="color: #aaa; font-size: 10px; margin-bottom: 10px;">Versão <span id="appVersion">V3.5</span></p>
                 <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
                     <a href="https://github.com/valentisnoreply" target="_blank" style="color: #fff; text-decoration: none; font-size: 20px; transition: color 0.3s;" title="GitHub">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>

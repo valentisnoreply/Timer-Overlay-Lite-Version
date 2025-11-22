@@ -176,7 +176,11 @@ function getCurrentConfig() {
         bgB: document.getElementById('bg-b').value,
         bgA: document.getElementById('bg-a').value,
         soundEnabled: document.getElementById('soundEnabled').checked,
-        soundVolume: document.getElementById('soundVolume').value
+        soundVolume: document.getElementById('soundVolume').value,
+        outlineWidth: document.getElementById('outlineWidth').value,
+        outlineEnabled: document.getElementById('outlineEnabled').checked,
+        fontFamily: document.getElementById('fontFamily').value,
+        fontSize: document.getElementById('fontSize').value
     };
 }
 
@@ -225,6 +229,24 @@ function applyConfig(config) {
     document.getElementById('bg-g').value = config.bgG;
     document.getElementById('bg-b').value = config.bgB;
     document.getElementById('bg-a').value = config.bgA;
+    
+    // Borda
+    if (config.outlineWidth !== undefined) {
+        document.getElementById('outlineWidth').value = config.outlineWidth;
+        document.getElementById('outlineWidthVal').textContent = config.outlineWidth + 'px';
+    }
+    if (config.outlineEnabled !== undefined) {
+        document.getElementById('outlineEnabled').checked = config.outlineEnabled;
+    }
+    
+    // Fonte
+    if (config.fontFamily !== undefined) {
+        document.getElementById('fontFamily').value = config.fontFamily;
+    }
+    if (config.fontSize !== undefined) {
+        document.getElementById('fontSize').value = config.fontSize;
+        document.getElementById('fontSizeVal').textContent = config.fontSize + 'px';
+    }
     
     // Som
     if (config.soundEnabled !== undefined) {
@@ -389,7 +411,9 @@ function updateDisplay() {
 }
 
 function updateClipPath(percentage) {
-    const topEdge = 100 - (15 + (percentage / 100) * 60);
+    const topEdgeValue = parseFloat(document.getElementById('liquidTopEdge')?.value) || 22;
+    document.getElementById('liquidTopEdge-val').textContent = topEdgeValue;
+    const topEdge = 100 - (topEdgeValue + (percentage / 100) * 60);
     const keyframes = `
         @keyframes waveAnimation {
             0%, 100% {
@@ -542,8 +566,16 @@ function applyColors() {
     
     // Contorno
     const outlineColor = getRGBA('outline');
-    base.style.webkitTextStroke = `4px ${outlineColor}`;
-    base.style.textStroke = `4px ${outlineColor}`;
+    const outlineWidth = document.getElementById('outlineWidth').value;
+    const outlineEnabled = document.getElementById('outlineEnabled').checked;
+    
+    if (outlineEnabled) {
+        base.style.webkitTextStroke = `${outlineWidth}px ${outlineColor}`;
+        base.style.textStroke = `${outlineWidth}px ${outlineColor}`;
+    } else {
+        base.style.webkitTextStroke = 'none';
+        base.style.textStroke = 'none';
+    }
     
     // Preenchimento
     base.style.color = getRGBA('fill');
@@ -564,13 +596,87 @@ function applyColors() {
 
 // ======================
 // INICIALIZAÇÃO
+// Controle do limite superior do líquido
+function updateLiquidTopEdge() {
+    const val = document.getElementById('liquidTopEdge').value;
+    document.getElementById('liquidTopEdge-val').textContent = val;
+    localStorage.setItem('liquidTopEdge', val);
+    updateDisplay();
+}
+
+function loadLiquidTopEdge() {
+    const val = localStorage.getItem('liquidTopEdge');
+    if (val !== null) {
+        document.getElementById('liquidTopEdge').value = val;
+        document.getElementById('liquidTopEdge-val').textContent = val;
+    }
+}
 // ======================
+// CONTROLE DE FONTE E TAMANHO
+function updateFont() {
+    const font = document.getElementById('fontFamily').value;
+    const size = parseInt(document.getElementById('fontSize').value) || 150;
+    document.getElementById('timer-base').style.fontFamily = font;
+    document.getElementById('timer-liquid').style.fontFamily = font;
+    document.getElementById('timer-base').style.fontSize = size + 'px';
+    document.getElementById('timer-liquid').style.fontSize = size + 'px';
+    document.getElementById('fontSizeVal').textContent = size + 'px';
+    localStorage.setItem('timerFontFamily', font);
+    localStorage.setItem('timerFontSize', size);
+}
+
+function loadFontSettings() {
+    const font = localStorage.getItem('timerFontFamily');
+    const size = localStorage.getItem('timerFontSize');
+    if (font) {
+        document.getElementById('fontFamily').value = font;
+        document.getElementById('timer-base').style.fontFamily = font;
+        document.getElementById('timer-liquid').style.fontFamily = font;
+    }
+    if (size) {
+        document.getElementById('fontSize').value = size;
+        document.getElementById('fontSizeVal').textContent = size + 'px';
+        document.getElementById('timer-base').style.fontSize = size + 'px';
+        document.getElementById('timer-liquid').style.fontSize = size + 'px';
+    }
+}
+
+// ======================
+// CONTROLE DE BORDA
+// ======================
+function updateOutlineWidth() {
+    const width = document.getElementById('outlineWidth').value;
+    document.getElementById('outlineWidthVal').textContent = width + 'px';
+    localStorage.setItem('timerOutlineWidth', width);
+    applyColors();
+}
+
+function toggleOutline() {
+    const enabled = document.getElementById('outlineEnabled').checked;
+    localStorage.setItem('timerOutlineEnabled', enabled);
+    applyColors();
+}
+
+function loadOutlineSettings() {
+    const width = localStorage.getItem('timerOutlineWidth');
+    const enabled = localStorage.getItem('timerOutlineEnabled');
+    if (width) {
+        document.getElementById('outlineWidth').value = width;
+        document.getElementById('outlineWidthVal').textContent = width + 'px';
+    }
+    if (enabled !== null) {
+        document.getElementById('outlineEnabled').checked = enabled === 'true';
+    }
+}
+
 updateDisplay();
 applyColors();
 loadPresets();
 loadSoundSettings();
-
-// Carregar preset padrão ao iniciar
 window.addEventListener('load', () => {
     loadDefaultPreset();
+    loadFontSettings();
+    loadOutlineSettings();
+    loadLiquidTopEdge();
+    updateDisplay();
 });
